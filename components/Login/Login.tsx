@@ -1,8 +1,14 @@
 "use client";
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { ContextUsage } from "../Context/ApplicationContext";
 
-export default function Login() {
+interface LoginProps {
+  reload: () => void;
+}
+
+export default function Login(props: LoginProps) {
   interface Login {
     username: string;
     password: string;
@@ -33,32 +39,43 @@ export default function Login() {
     setLoginDetails(deepcopyoflogin);
   };
 
+  let context = ContextUsage();
+  // React Hook Form
+  const { register, handleSubmit } = useForm<Login>();
+
+  const onSubmit: SubmitHandler<Login> = (data) => {
+    context.LoginStateRefreshher();
+  };
+
   return (
     <main className="flex justify-center items-center p-6 min-h-svh">
       <div className="bg-slate-300 p-6 rounded-md flex flex-col shadow-lg gap-2">
         <h1 className="font-semibold">LOGIN</h1>
-        <div className="flex flex-col gap-3">
-          <TextField
-            label={"Username"}
-            value={loginDetails.username}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              TextFieldHandler("username", event)
-            }
-          ></TextField>
-          <TextField
-            label={"Password"}
-            value={loginDetails.password}
-            type="password"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              TextFieldHandler("password", event)
-            }
-          ></TextField>
-          <div className="flex justify-end gap-3 ">
-            <Button variant="contained" className="bg-accent ">
-              Login
-            </Button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-3">
+            <TextField
+              label={"Username"}
+              // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              //   TextFieldHandler("username", event)
+              // }
+              {...register("username")}
+            ></TextField>
+            <TextField
+              label={"Password"}
+              type="password"
+              {...register("password")}
+            ></TextField>
+            <div className="flex justify-end gap-3">
+              <Button
+                variant="contained"
+                className="bg-accent hover:bg-sky-900"
+                type="submit"
+              >
+                Login
+              </Button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </main>
   );

@@ -31,9 +31,3 @@ body {
     text-wrap: balance;
   }
 } */
-
-/* @layer base {
-  .reset-button-bg {
-    @apply bg-sky-500;
-  }
-} */

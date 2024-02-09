@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ContextProvider } from "@/components/Context/ApplicationContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +17,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-      <link rel="preconnect" href="https://fonts.gstatic.com"></link>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
-        rel="stylesheet"
-      ></link>
-      <body className="bg-main">{children}</body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com"></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+          rel="stylesheet"
+        ></link>
+      </head>
+      <body className="bg-main">
+        <ContextProvider>{children}</ContextProvider>
+      </body>
     </html>
   );
 }

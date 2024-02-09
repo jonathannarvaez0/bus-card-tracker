@@ -16,6 +16,7 @@ const config: Config = {
       colors: {
         main: "#f5db0e",
         accent: "#133852",
+        peyborit: "#B793D2",
       },
       fontFamily: {
         sans: ["Lato", "Helvetica", "Times New Roman"],
