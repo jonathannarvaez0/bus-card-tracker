@@ -40,4 +40,5 @@ const RegistrationModal = forwardRef((props, ref) => {
   );
 });
 
+RegistrationModal.displayName = "RegistrationModal";
 export default RegistrationModal;
