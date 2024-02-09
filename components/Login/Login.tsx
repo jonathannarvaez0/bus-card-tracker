@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, Modal, TextField } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ContextUsage } from "../Context/ApplicationContext";
+import RegistrationModal from "../Registration/RegistrationModal";
 
 interface LoginProps {
   reload: () => void;
@@ -47,9 +48,12 @@ export default function Login(props: LoginProps) {
     context.LoginStateRefreshher();
   };
 
+  const [showRegistrationModal, setShowRegistrationModal] =
+    useState<boolean>(false);
+
   return (
     <main className="flex justify-center items-center p-6 min-h-svh">
-      <div className="bg-slate-300 p-6 rounded-md flex flex-col shadow-lg gap-2">
+      <div className="bg-slate-300 p-7 rounded-md flex flex-col shadow-lg gap-2">
         <h1 className="font-semibold">LOGIN</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3">
@@ -65,6 +69,12 @@ export default function Login(props: LoginProps) {
               type="password"
               {...register("password")}
             ></TextField>
+            <p
+              className="text-sky-600 text-sm hover:underline hover:cursor-pointer"
+              onClick={() => setShowRegistrationModal(true)}
+            >
+              No account?
+            </p>
             <div className="flex justify-end gap-3">
               <Button
                 variant="contained"
@@ -77,6 +87,14 @@ export default function Login(props: LoginProps) {
           </div>
         </form>
       </div>
+
+      <Modal
+        open={showRegistrationModal}
+        className="flex justify-center items-center p-6"
+        onClose={() => setShowRegistrationModal(false)}
+      >
+        <RegistrationModal></RegistrationModal>
+      </Modal>
     </main>
   );
 }
