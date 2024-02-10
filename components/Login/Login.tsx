@@ -42,7 +42,16 @@ export default function Login(props: LoginProps) {
 
   let context = ContextUsage();
   // React Hook Form
-  const { register, handleSubmit } = useForm<Login>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Login>({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
   const onSubmit: SubmitHandler<Login> = (data) => {
     context.LoginStateRefreshher();
@@ -57,18 +66,30 @@ export default function Login(props: LoginProps) {
         <h1 className="font-semibold">LOGIN</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3">
-            <TextField
-              label={"Username"}
-              // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              //   TextFieldHandler("username", event)
-              // }
-              {...register("username")}
-            ></TextField>
-            <TextField
-              label={"Password"}
-              type="password"
-              {...register("password")}
-            ></TextField>
+            <div>
+              <TextField
+                label={"Username"}
+                // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                //   TextFieldHandler("username", event)
+                // }
+                {...register("username", {
+                  required: "Username can't be blank",
+                })}
+                error={errors.username?.ref?.value == ""}
+              ></TextField>
+              <p className="text-red-600 text-xs">{errors.username?.message}</p>
+            </div>
+            <div>
+              <TextField
+                label={"Password"}
+                type="password"
+                {...register("password", {
+                  required: "Username can't be blank",
+                })}
+                error={errors.password?.ref?.value == ""}
+              ></TextField>
+              <p className="text-red-600 text-xs">{errors.password?.message}</p>
+            </div>
             <p
               className="text-sky-600 text-sm hover:underline hover:cursor-pointer"
               onClick={() => setShowRegistrationModal(true)}
